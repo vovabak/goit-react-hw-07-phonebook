@@ -1,8 +1,8 @@
 import { useSelector, useDispatch } from "react-redux";
-import { getContacts, addContact } from '../../redux';
+import { getContacts } from '../../redux';
+import {addContact} from '../../redux/operations'
 import { Formik } from 'formik';
 import { object, string } from 'yup';
-import { nanoid } from 'nanoid';
 import { Label, Button, FormStyled as Form, Input } from './ContactForm.styled';
 
 
@@ -18,20 +18,19 @@ let signupSchema = object({
 
 export const ContactForm = () => {
     const dispatch = useDispatch();
-    const contacts = useSelector(getContacts);
+    const {items} = useSelector(getContacts);
     
     const handleSubmit = (values, { resetForm }) => {
         
         const { name, number } = values;
         const normalizedName = name.toLowerCase().trim();
 
-        if (contacts.find(contact => contact.name.toLowerCase() === normalizedName)) {
+        if (items.find(item => item.name.toLowerCase() === normalizedName)) {
             alert(`${name.trim()} is allready in contacts`)
             return
         }
         
-        dispatch(addContact({
-            id: nanoid(),
+        dispatch(addContact({           
             name: name.trim(),
             number,
             })
