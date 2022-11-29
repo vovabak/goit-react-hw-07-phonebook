@@ -15,7 +15,7 @@ export const ListItem = ({ contact }) => {
         
 
     return <Item>        
-                <Text>{name}: {phone}</Text>
+                <Text><b>{name}:</b> <br /> {phone}</Text>
                 <Button type="button" disabled={isDeliting} onClick={() => {
                     setIsDeliting(true);           
                     dispatch(deleteContact(id));        

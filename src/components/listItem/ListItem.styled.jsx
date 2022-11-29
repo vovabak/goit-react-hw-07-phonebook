@@ -9,7 +9,7 @@ export const Item = styled.li`
     `
 
 export const Text = styled.p`
-    margin: 0;    
+    margin: 0;       
     `
 
 export const Button = styled.button`
