@@ -1,18 +1,27 @@
-import { useDispatch, useSelector } from 'react-redux';
-import {getContacts} from '../../redux'
+import { useDispatch } from 'react-redux';
+// import {selectContacts} from '../../redux'
 import { deleteContact } from 'redux/operations';
 import PropTypes from 'prop-types';
-import { Item, Text } from '../listItem/ListItem.styled';
+import { Item, Text, Button } from '../listItem/ListItem.styled';
+import { useState } from 'react';
+
+
 
 export const ListItem = ({ contact }) => {
     const dispatch = useDispatch();
-    const {isLoading} = useSelector(getContacts);
+    const [isDeliting, setIsDeliting] = useState(false)    
+    // const { isLoading } = useSelector(selectContacts);
+    const { name, phone, id } = contact;    
+        
 
-    const { name, phone, id } = contact;
-
-    return <Item>
+    return <Item>        
                 <Text>{name}: {phone}</Text>
-        <button type="button" disabled={isLoading} onClick={() => dispatch(deleteContact(id))}>{isLoading? 'Deleting...' : 'Delete'}</button>
+                <Button type="button" disabled={isDeliting} onClick={() => {
+                    setIsDeliting(true);           
+                    dispatch(deleteContact(id));        
+                }}>
+                    {isDeliting ? 'Deleting...' : 'Delete'}
+                </Button>
             </Item>
 }
 

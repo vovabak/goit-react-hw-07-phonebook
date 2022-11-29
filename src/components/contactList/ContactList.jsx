@@ -1,37 +1,35 @@
 import { useDispatch, useSelector } from "react-redux";
-import { getContacts, getFilter } from '../../redux';
+import { selectContacts, selectVisibleContacts } from '../../redux';
 import { ListItem } from "components/listItem";
 import { List, NotifyText } from './ContactList.styled';
 import { useEffect } from "react";
 import { fetchContacts } from "redux/operations";
 
-export const ContactList = () => {
+export const ContactList = () => {    
     const dispatch = useDispatch();
-    const {items, isLoading, error} = useSelector(getContacts);
-    const filter = useSelector(getFilter).toLowerCase().trim();    
-   
-    const filteredContacts = items.filter(item =>
-        item.name.toLowerCase().includes(filter));    
+    const visibleContacts = useSelector(selectVisibleContacts);    
+    const {items, isLoading, error} = useSelector(selectContacts);    
     
-    useEffect(() => {
+    useEffect(() => {        
         dispatch(fetchContacts());
     }, [dispatch])
+    
 
     return <>
         
-        {isLoading && <p>Loading contacts...</p>}        
+        {isLoading && <b>Loading contacts...</b>}        
         
         {error && <NotifyText>{error}</NotifyText>}
     
-        {items.length > 0 && filteredContacts.length === 0 &&
-            <NotifyText>Sorry, there's no contacts matching your querry</NotifyText>}
+        {items.length > 0 && visibleContacts.length === 0 &&
+            <NotifyText>Sorry, there's no contacts matching your query</NotifyText>}
 
-        {items.length === 0 && filter !== '' &&
+        {items.length === 0 && !isLoading && !error &&
             < NotifyText > There's no contacts in your Phonebook</NotifyText>}
         
-        {filteredContacts.length > 0 &&
-            <List>            
-                    {filteredContacts.map(contact =>
+        {visibleContacts.length > 0 && !error &&
+            <List>          
+                    {visibleContacts.map(contact =>
                         <ListItem
                             key={contact.id}
                             contact={contact}                        

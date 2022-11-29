@@ -9,5 +9,11 @@ export const Item = styled.li`
     `
 
 export const Text = styled.p`
+    margin: 0;    
+    `
+
+export const Button = styled.button`
     margin: 0;
+    padding: 2px 5px;
+    width: 80px;
     `

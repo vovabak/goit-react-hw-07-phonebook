@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { getContacts } from '../../redux';
+import { selectContacts } from '../../redux';
 import {addContact} from '../../redux/operations'
 import { Formik } from 'formik';
 import { object, string } from 'yup';
@@ -18,7 +18,7 @@ let signupSchema = object({
 
 export const ContactForm = () => {
     const dispatch = useDispatch();
-    const {items} = useSelector(getContacts);
+    const {items} = useSelector(selectContacts);
     
     const handleSubmit = (values, { resetForm }) => {
         
